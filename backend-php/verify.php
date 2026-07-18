@@ -1,5 +1,8 @@
 <?php
 session_start();
+require_once 'RateLimit.php';
+enforceRateLimit(5, 10);
+
 header('Content-Type: application/json');
 
 $_SESSION['user_active'] = true; 
