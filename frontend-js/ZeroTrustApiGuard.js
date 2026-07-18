@@ -22,12 +22,16 @@ class ZeroTrustApiGuard {
         try {
             this.checkRateLimit();
             
-            const verifyRes = await fetch(this.endpoints.preFlight, { method: 'POST' });
+            const verifyRes = await fetch(this.endpoints.preFlight, { 
+                method: 'POST',
+                credentials: 'include'
+            });
             if (!verifyRes.ok) throw new Error("Verification failed.");
 
             const nonceRes = await fetch(this.endpoints.getNonce, { 
                 method: 'GET',
-                headers: { 'X-Custom-Auth': this.customAuthHeader }
+                headers: { 'X-Custom-Auth': this.customAuthHeader },
+                credentials: 'include'
             });
             if (!nonceRes.ok) throw new Error("Nonce generation failed.");
             
@@ -43,6 +47,7 @@ class ZeroTrustApiGuard {
                     'X-CSRF-Nonce': csrfNonce,
                     'Authorization': userAuth
                 },
+                credentials: 'include',
                 body: JSON.stringify(payload)
             });
 
