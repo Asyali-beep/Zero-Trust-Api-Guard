@@ -1,0 +1,16 @@
+# Node.js
+node_modules/
+.env
+
+# Python
+__pycache__/
+*.pyc
+venv/
+env/
+
+# PHP
+vendor/
+
+# OS/System Files
+.DS_Store
+Thumbs.db
