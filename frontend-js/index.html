@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zero Trust API Test</title>
+</head>
+<body>
+    <button id="orderBtn">Siparişi Onayla</button>
+
+    <script src="ZeroTrustApiGuard.js"></script>
+    <script>
+        const apiGuard = new ZeroTrustApiGuard({
+            preFlightUrl: '../backend-php/verify.php',
+            getNonceUrl: '../backend-php/nonce.php',
+            executeUrl: '../backend-php/api.php',
+            customAuthHeader: 'Basic ZHVtbXk6cGFzc3dvcmQ='
+        });
+
+        document.getElementById('orderBtn').addEventListener('click', async () => {
+            try {
+                const result = await apiGuard.makeSecureRequest({ 
+                    action: 'approve_order', 
+                    order_id: 1042 
+                });
+                console.log(result);
+            } catch (e) {
+                console.error(e);
+            }
+        });
+    </script>
+</body>
+</html>
